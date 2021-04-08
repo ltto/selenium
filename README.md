@@ -16,7 +16,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/ltto/T/selenium"
+	"github.com/ltto/selenium"
 )
 
 func main() {
