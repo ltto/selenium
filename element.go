@@ -85,6 +85,13 @@ const (
 type WebElement struct {
 	d selenium.WebElement
 }
+type Point struct {
+	d *selenium.Point
+}
+
+type Size struct {
+	d *selenium.Size
+}
 
 func (w WebElement) Click() {
 	err := w.d.Click()
@@ -188,28 +195,28 @@ func (w WebElement) GetAttribute(name string) string {
 	return attribute
 }
 
-func (w WebElement) Location() *selenium.Point {
+func (w WebElement) Location() Point {
 	location, err := w.d.Location()
 	if err != nil {
 		panic(err)
 	}
-	return location
+	return Point{location}
 }
 
-func (w WebElement) LocationInView() *selenium.Point {
+func (w WebElement) LocationInView() Point {
 	view, err := w.d.LocationInView()
 	if err != nil {
 		panic(err)
 	}
-	return view
+	return Point{view}
 }
 
-func (w WebElement) Size() *selenium.Size {
+func (w WebElement) Size() Size {
 	size, err := w.d.Size()
 	if err != nil {
 		panic(err)
 	}
-	return size
+	return Size{size}
 }
 
 func (w WebElement) CSSProperty(name string) string {
