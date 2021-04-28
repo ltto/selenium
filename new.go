@@ -4,17 +4,24 @@ import (
 	"fmt"
 	"github.com/tebeka/selenium"
 	"log"
+	"os/exec"
 )
 
 func NewChromeDriver() (d *WebDriver, err error) {
 	var (
-		service *selenium.Service
-		port    int
+		service    *selenium.Service
+		port       int
+		driverPath string
 	)
 	if port, err = FindFreePort(); err != nil {
 		return nil, err
 	}
-	if service, err = selenium.NewChromeDriverService(FindPATH("chromedriver"), port); nil != err {
+	driverPath, err = exec.LookPath("chromedriver")
+	if err != nil {
+		return
+	}
+
+	if service, err = selenium.NewChromeDriverService(driverPath, port); nil != err {
 		return nil, fmt.Errorf("start a chromedriver service falid %v", err)
 	}
 	log.Printf("start a chromedriver service on 127.0.0.1:%v", port)
