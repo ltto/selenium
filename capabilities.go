@@ -7,6 +7,8 @@ import (
 	"github.com/tebeka/selenium/log"
 )
 
+type ChromeCapabilities chrome.Capabilities
+
 type Capabilities struct {
 	d *selenium.Capabilities
 }
