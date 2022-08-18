@@ -293,16 +293,20 @@ func (d *WebDriver) GetCookies() []selenium.Cookie {
 	return cookies
 }
 
-func (d *WebDriver) GetCookie(name string) (selenium.Cookie, ) {
+func (d *WebDriver) GetCookie(name string) Cookie {
 	cookie, err := d.Data.GetCookie(name)
 	if err != nil {
 		panic(err)
 	}
-	return cookie
+	return Cookie{&cookie}
 }
 
-func (d *WebDriver) AddCookie(cookie *selenium.Cookie) {
-	err := d.Data.AddCookie(cookie)
+type Cookie struct {
+	*selenium.Cookie
+}
+
+func (d *WebDriver) AddCookie(cookie Cookie) {
+	err := d.Data.AddCookie(cookie.Cookie)
 	if err != nil {
 		panic(err)
 	}
