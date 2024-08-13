@@ -1,4 +1,4 @@
-module github/ltto/selenium
+module github.com/ltto/selenium
 
 go 1.16
 
