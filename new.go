@@ -2,20 +2,22 @@ package selenium
 
 import (
 	"fmt"
-	"github.com/tebeka/selenium"
-	"github.com/tebeka/selenium/chrome"
 	"log"
 	"os/exec"
+
+	"github.com/tebeka/selenium"
+	"github.com/tebeka/selenium/chrome"
 )
 
 func NewChromeDriver() (d *WebDriver, err error) {
-	return doNewChromeDriver(nil)
-}
-func NewChromeDriverCap(chromeCap ChromeCapabilities) (d *WebDriver, err error) {
-	return doNewChromeDriver(&chromeCap)
+	return doNewChromeDriver(nil, nil)
 }
 
-func doNewChromeDriver(c *ChromeCapabilities) (d *WebDriver, err error) {
+func NewChromeDriverCap(cap Capabilities, chromeCap ChromeCapabilities) (d *WebDriver, err error) {
+	return doNewChromeDriver(&cap, &chromeCap)
+}
+
+func doNewChromeDriver(cap *Capabilities, chromeCap *ChromeCapabilities) (d *WebDriver, err error) {
 	var (
 		service    *selenium.Service
 		port       int
@@ -34,7 +36,11 @@ func doNewChromeDriver(c *ChromeCapabilities) (d *WebDriver, err error) {
 	}
 	log.Printf("start a chromedriver service on 127.0.0.1:%v", port)
 
-	if driver, err := selenium.NewRemote(newCaps(c), fmt.Sprintf("http://localhost:%d/wd/hub", port)); err != nil {
+	if cap == nil {
+		cap = NewCapabilities()
+	}
+
+	if driver, err := selenium.NewRemote(newCaps(chromeCap), fmt.Sprintf("http://localhost:%d/wd/hub", port)); err != nil {
 		service.Stop()
 		return nil, fmt.Errorf("failed to open session: %v", err)
 	} else {

@@ -13,6 +13,11 @@ type Capabilities struct {
 	d *selenium.Capabilities
 }
 
+func NewCapabilities() *Capabilities {
+	capabilities := selenium.Capabilities{}
+	return &Capabilities{d: &capabilities}
+}
+
 // AddChrome adds Chrome-specific capabilities.
 func (c *Capabilities) AddChrome(f chrome.Capabilities) {
 	(*c.d)[chrome.CapabilitiesKey] = f

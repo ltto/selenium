@@ -1,9 +1,10 @@
 package selenium
 
 import (
+	"time"
+
 	"github.com/tebeka/selenium"
 	"github.com/tebeka/selenium/log"
-	"time"
 )
 
 type WebDriver struct {
